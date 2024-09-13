@@ -1,0 +1,59 @@
+name: cinema
+description: "A new Flutter project."
+publish_to: 'none'
+version: 0.1.0
+
+environment:
+  sdk: '>=3.3.3 <4.0.0'
+
+dependencies:
+  animated_notch_bottom_bar: ^1.0.3
+  carousel_slider: ^5.0.0
+  flutter:
+    sdk: flutter
+  google_fonts: ^6.2.1
+  infinite_carousel: ^1.1.1
+  responsive_builder: ^0.7.1
+  shared_preferences: ^2.2.3
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/images/creed.jpg
+    - assets/images/wolve.jpg
+    - assets/images/me.jpg
+    - assets/images/wolve1.jpg
+    - assets/images/me1.jpg
+    - assets/images/creed1.png
+    - assets/images/what.jpg
+    - assets/images/what1.jpg
+    - assets/images/border1.png
+    - assets/images/border.jpg
+    - assets/images/alien.jpg
+    - assets/images/alien1.png
+    - assets/images/quiet.jpg
+    - assets/images/quiet1.jpg
+    - assets/images/rate.png
+    - assets/images/sun.jpg
+    - assets/images/sun1.png
+    - assets/images/crow.jpg
+    - assets/images/crow1.png
+    - assets/images/stree.jpg
+    - assets/images/stree1.jpg
+    - assets/images/boss.jpg
+    - assets/images/boss1.jpg
+    - assets/images/trap.jpg
+    - assets/images/trap1.jpg
+    - assets/images/one.jpg
+    - assets/images/one1.jpg
+    - assets/images/glad.jpg
+    - assets/images/glad1.jpg
+    - assets/images/wild.jpg
+    - assets/images/wild1.jpg
+    - assets/images/afraid.jpg
+    - assets/images/afraid1.jpg
