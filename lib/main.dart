@@ -29,6 +29,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         // Define your dark theme here
         primarySwatch: Colors.blue,
+         scaffoldBackgroundColor: Colors.black,
         textTheme: TextTheme(
           bodyLarge: TextStyle(color: Colors.black), // Text color for light mode
        

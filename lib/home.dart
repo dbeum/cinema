@@ -197,7 +197,7 @@ void _onItemTapped(int index) {
 
 
 
-//design bottom navbar
+
 //cinema page
 //tickets page
 //each movies click-rent a movie or buy ticket plus movie info

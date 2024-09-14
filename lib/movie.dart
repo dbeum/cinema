@@ -126,7 +126,7 @@ Center(
                       autoPlayCurve: Curves.fastOutSlowIn,
                       enableInfiniteScroll: false,
                       autoPlayAnimationDuration: Duration(milliseconds: 800),
-                      viewportFraction: .3,
+                      viewportFraction: .45,
                     ),
             items:[
     Hover2ExpandImage(
@@ -209,7 +209,7 @@ Center(
                       autoPlayCurve: Curves.fastOutSlowIn,
                       enableInfiniteScroll: false,
                       autoPlayAnimationDuration: Duration(milliseconds: 800),
-                      viewportFraction: .3,
+                      viewportFraction: .45,
                     ),
             items:[
     Hover2ExpandImage(
@@ -292,7 +292,7 @@ Center(
                       autoPlayCurve: Curves.fastOutSlowIn,
                       enableInfiniteScroll: false,
                       autoPlayAnimationDuration: Duration(milliseconds: 800),
-                      viewportFraction: .3,
+                      viewportFraction: .45,
                     ),
             items:[
  
@@ -349,7 +349,7 @@ Center(
                       autoPlayCurve: Curves.fastOutSlowIn,
                       enableInfiniteScroll: false,
                       autoPlayAnimationDuration: Duration(milliseconds: 800),
-                      viewportFraction: .3,
+                      viewportFraction: .45,
                     ),
             items:[
  
@@ -406,7 +406,7 @@ Hover2ExpandImage(
                       autoPlayCurve: Curves.fastOutSlowIn,
                       enableInfiniteScroll: false,
                       autoPlayAnimationDuration: Duration(milliseconds: 800),
-                      viewportFraction: .3,
+                      viewportFraction: .45,
                     ),
             items:[
    Hover2ExpandImage(
