@@ -4,6 +4,7 @@ import 'package:animated_notch_bottom_bar/animated_notch_bottom_bar/animated_not
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cinema/movie.dart';
 import 'package:cinema/movie2.dart';
+import 'package:cinema/tickets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:responsive_builder/responsive_builder.dart';
@@ -30,14 +31,14 @@ class _HomeState extends State<Home> {
    //mobile
     Movie(),
    cinema(),
-    //TicketsScreen(),
+    tickets(),
   ];
   
  static List<Widget> _widgetOptions2 = <Widget>[
     //desktop
     Movie2(),
    cinema(),
-    //TicketsScreen(),
+    tickets(),
   ];
 
   final TextStyle selectedLabelStyle = TextStyle(
@@ -94,17 +95,17 @@ void _onItemTapped(int index) {
           BottomBarItem(
             inActiveItem: Icon(Icons.movie, color: Colors.blueGrey),
             activeItem: Icon(Icons.movie, color: Colors.blueAccent),
-            itemLabel: 'Movies',
+          //  itemLabel: 'Movies',
           ),
           BottomBarItem(
-            inActiveItem: Icon(Icons.location_city, color: Colors.blueGrey),
-            activeItem: Icon(Icons.location_city, color: Colors.blueAccent),
-            itemLabel: 'Cinema',
+            inActiveItem: Icon(Icons.search_off_outlined, color: Colors.blueGrey),
+            activeItem: Icon(Icons.search, color: Colors.blueAccent),
+           // itemLabel: 'Search',
           ),
           BottomBarItem(
             inActiveItem: Icon(Icons.confirmation_number, color: Colors.blueGrey),
             activeItem: Icon(Icons.confirmation_number, color: Colors.blueAccent),
-            itemLabel: 'Tickets',
+           // itemLabel: 'Tickets',
           ),
         ],
         onTap: _onItemTapped,
@@ -153,9 +154,9 @@ void _onItemTapped(int index) {
             itemLabel: 'Movies',
           ),
           BottomBarItem(
-            inActiveItem: Icon(Icons.location_city, color: Colors.blueGrey),
-            activeItem: Icon(Icons.location_city, color: Colors.blueAccent),
-            itemLabel: 'Cinema',
+            inActiveItem: Icon(Icons.search_off_outlined, color: Colors.blueGrey),
+            activeItem: Icon(Icons.search, color: Colors.blueAccent),
+            itemLabel: 'Search',
           ),
           BottomBarItem(
             inActiveItem: Icon(Icons.confirmation_number, color: Colors.blueGrey),
@@ -198,16 +199,17 @@ void _onItemTapped(int index) {
 
 
 
-//cinema page
-//tickets page
-//each movies click-rent a movie or buy ticket plus movie info
-//rent a movie page 
 
-//dark mode
-//login page
-//firebase link
+//book a movie page 
+
+//redesign info page
+//share/print ticket
+//tickt info firebase
+//search movie
+
 //profile page
-//animated container render overflow issue
+//fonts
 //transition animation
 // tutorial screen on first launch
 //learn shared preference
+//clean code aka remove some comments 

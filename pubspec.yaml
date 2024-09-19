@@ -9,12 +9,18 @@ environment:
 dependencies:
   animated_notch_bottom_bar: ^1.0.3
   carousel_slider: ^5.0.0
+  cloud_firestore: ^5.4.0
+  firebase_auth: ^5.2.0
+  firebase_core: ^3.4.0
   flutter:
     sdk: flutter
+  flutter_bloc: ^8.1.6
+  flutterfire_cli: ^1.0.1-dev.4
   google_fonts: ^6.2.1
   infinite_carousel: ^1.1.1
   responsive_builder: ^0.7.1
   shared_preferences: ^2.2.3
+  vertical_card_pager: ^1.6.2
 
 dev_dependencies:
   flutter_test:
@@ -57,3 +63,6 @@ flutter:
     - assets/images/wild1.jpg
     - assets/images/afraid.jpg
     - assets/images/afraid1.jpg
+    - assets/images/logo.png
+    - assets/images/popcorn.png
+    - assets/images/popcorn1.png

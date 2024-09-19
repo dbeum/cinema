@@ -32,8 +32,9 @@ class _Hover2ExpandImageState extends State<Hover2ExpandImage> {
 
   @override
   Widget build(BuildContext context) {
-    return TextButton(onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => info(  imagePath: widget.imagePath,
-                    text: widget.text,text2:widget.text2
+     return TextButton(onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => info( 
+    // imagePath: widget.imagePath,
+    //                 text: widget.text,text2:widget.text2
                   ),)), child: 
     
       GestureDetector(

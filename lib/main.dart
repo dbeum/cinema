@@ -1,8 +1,23 @@
+import 'package:cinema/authcheck.dart';
+import 'package:cinema/firebase_options.dart';
 import 'package:cinema/home.dart';
+import 'package:cinema/login.dart';
+import 'package:cinema/register.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  try {
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+    print('Firebase initialized');
+  } catch (e) {
+    print('Error initializing Firebase: $e');
+  }
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -38,8 +53,10 @@ class MyApp extends StatelessWidget {
         // Other theme settings...
       ),
       themeMode: ThemeMode.system, // Use system theme (light or dark)
-      home: Home(),
+      home:AuthCheck(),
       debugShowCheckedModeBanner: false,
     );
   }
 }
+
+

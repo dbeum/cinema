@@ -31,7 +31,9 @@ class _HoverExpandImageState extends State<HoverExpandImage> {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child:TextButton(onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => info(imagePath:widget.imagePath,text: widget.text,text2: widget.text2,),)), 
+      child:TextButton(onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => info(
+        // imagePath:widget.imagePath,text: widget.text,text2: widget.text2
+        ),)), 
       child: MouseRegion(
         onEnter: (_) => _onHover(true),
         onExit: (_) => _onHover(false),
