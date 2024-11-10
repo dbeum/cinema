@@ -1,4 +1,5 @@
 Cinema Booking App
+
 Welcome to the Cinema Booking App! This is an app that allows users to search for movies, view movie details, watch trailers, and book tickets seamlessly. It also includes a Ticket History page to check past bookings and a Ticket Page to view upcoming tickets.
 
 🎬 Features
