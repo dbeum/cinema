@@ -45,7 +45,7 @@ class _loginState extends State<login> {
 
 
 Widget MobileNavBar() {
-  
+  bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
   return Scaffold(
   body:
    Stack(children: [
@@ -58,13 +58,13 @@ Widget MobileNavBar() {
       Image.asset('assets/images/logo.png',height: 200,),
        SizedBox(height: 50,),
 Container(
- height: 243,
+ height: 255,
       width: 250,
-      decoration: BoxDecoration(
-      //  color: Colors.black,
-        borderRadius: BorderRadius.all(Radius.circular(15)),
-        border: Border.all(color: Colors.black,width: 1)
-      ),
+      // decoration: BoxDecoration(
+      // //  color: Colors.black,
+      //   borderRadius: BorderRadius.all(Radius.circular(15)),
+      //   border: Border.all(color: Colors.black,width: 1)
+      // ),
     child: FutureBuilder(
       future: Firebase.initializeApp(
             options: DefaultFirebaseOptions.currentPlatform
@@ -80,18 +80,19 @@ Container(
        Container(
         height: 30,
         width: 200,
-        decoration: BoxDecoration(
-          border: Border.all(color: Colors.black,width: 2),
+        // decoration: BoxDecoration(
+        //   border: Border.all(color: Colors.black,width: 2),
           
-          borderRadius: BorderRadius.all(Radius.circular(5))
-        ),
+        //   borderRadius: BorderRadius.all(Radius.circular(5))
+        // ),
         child: TextField(
           controller:_email ,
             keyboardType: TextInputType.emailAddress,
           autocorrect: false,
           enableSuggestions: true,
-              style: TextStyle(color: Colors.white),
+              style: TextStyle(  color: isDarkMode ? Colors.white : Colors.black,),
           decoration: InputDecoration(
+            enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: isDarkMode ? Colors.white : Colors.black,)),
         contentPadding: EdgeInsets.symmetric(vertical: 15), // Adjust the vertical padding
       ),
           ),
@@ -101,17 +102,18 @@ Container(
        Container(
         height: 30,
         width: 200,
-        decoration: BoxDecoration(
-          border: Border.all(color: Colors.black,width: 2),
-          borderRadius: BorderRadius.all(Radius.circular(5))
-        ),
+      //   decoration: BoxDecoration(
+      //  //   border: Border.all(color: Colors.black,width: 2),
+      //    // borderRadius: BorderRadius.all(Radius.circular(5))
+      //   ),
         child: TextField(
           controller: _password,
           autocorrect: false,
           enableSuggestions: true,
           obscureText: true,
-                style: TextStyle(color:  Color.fromARGB(178, 5, 74, 131)),
+                style: TextStyle(  color: isDarkMode ? Colors.white : Colors.black,),
             decoration: InputDecoration(
+              enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: isDarkMode ? Colors.white : Colors.black,)),
         contentPadding: EdgeInsets.symmetric(vertical: 15), // Adjust the vertical padding
       ),
           ),
@@ -158,11 +160,11 @@ Container(
   Container(
     height: 30,
     width: 200,
-     decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(5)),color:Colors.black,),
+ //    decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(5)),color:Colors.black,),
 child: TextButton(onPressed: () {
     Navigator.push(context, MaterialPageRoute(builder:(context) => register() ));
   },
-   child:      Text('Register',style:TextStyle(fontSize: 10,color: Colors.white),)),
+   child:      Text('Register',style:TextStyle(fontSize: 10,color:  isDarkMode ? Colors.white : Colors.black,),)),
    
   ),
  Align(alignment: Alignment.bottomCenter,

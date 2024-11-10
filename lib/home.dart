@@ -30,14 +30,14 @@ class _HomeState extends State<Home> {
   static List<Widget> _widgetOptions = <Widget>[
    //mobile
     Movie(),
-   cinema(),
+   Cinema(),
     tickets(),
   ];
   
  static List<Widget> _widgetOptions2 = <Widget>[
     //desktop
     Movie2(),
-   cinema(),
+   Cinema(),
     tickets(),
   ];
 
@@ -200,16 +200,19 @@ void _onItemTapped(int index) {
 
 
 
-//book a movie page 
 
-//redesign info page
-//share/print ticket
-//tickt info firebase
-//search movie
+ 
 
-//profile page
-//fonts
-//transition animation
-// tutorial screen on first launch
+
+
+
+
+
+
+
+//date next to time in info
+//keyboard covering textfield for password
+//forgotten password
+//splash screen and icon
 //learn shared preference
-//clean code aka remove some comments 
+//clean code aka add/remove some comments 

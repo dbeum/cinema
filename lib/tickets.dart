@@ -1,8 +1,16 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cinema/movie.dart';
+import 'package:cinema/pdf.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'package:vertical_card_pager/vertical_card_pager.dart';
+import 'package:pdf/pdf.dart';
+import 'package:pdf/widgets.dart' as pw;
+import 'package:printing/printing.dart';
+import 'package:flutter/services.dart' show rootBundle;
 
 class tickets extends StatefulWidget {
 
@@ -15,80 +23,77 @@ class tickets extends StatefulWidget {
 
 class _ticketsState extends State<tickets> {
  
+   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-   final List<String> titles = ["A Quiet Place Day One", "Move Like A Boss", "Inspector Sun"];
-  final List<Widget> images = [
-      Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(15)),
-        image: DecorationImage(
-          image: AssetImage('assets/images/quiet.jpg'),
-          fit: BoxFit.cover,
-          colorFilter: ColorFilter.mode(
-            Colors.black.withOpacity(0.4),
-            BlendMode.darken,
-          ),
-        ),
-      ),
-      child: Align(
-     alignment: Alignment.topCenter,
-        child:
-        Padding(
-            padding: const EdgeInsets.only(top: 50.0),
-            child: 
-          Text('Silverbird Cinema, Ikeja'),
-        )
-      
-      )
-    ),
-    Container(
-      decoration: BoxDecoration(
-         borderRadius: BorderRadius.all(Radius.circular(15)),
-        image: DecorationImage(
-          image: AssetImage('assets/images/boss.jpg'),
-          fit: BoxFit.cover,
-          colorFilter: ColorFilter.mode(
-            Colors.black.withOpacity(0.4),
-            BlendMode.darken,
-          ),
-        ),
-      ),
-      child: Align(
-     alignment: Alignment.topCenter,
-        child:
-        Padding(
-            padding: const EdgeInsets.only(top: 50.0),
-            child: 
-          Text('Silverbird Cinema, Ikeja'),
-        )
-      
-      ),
-    ),
-    Container(
-      decoration: BoxDecoration(
-         borderRadius: BorderRadius.all(Radius.circular(15)),
-        image: DecorationImage(
-          image: AssetImage('assets/images/sun.jpg'),
-          fit: BoxFit.cover,
-          colorFilter: ColorFilter.mode(
-            Colors.black.withOpacity(0.4),
-            BlendMode.darken,
-          ),
-        ),
-      ),
-      child: Align(
-     alignment: Alignment.topCenter,
-        child:
-        Padding(
-            padding: const EdgeInsets.only(top: 50.0),
-            child: 
-          Text('Silverbird Cinema, Ikeja'),
-        )
-      
-      ),
-    ),
-  ];
+ late Future<List<Map<String, dynamic>>> futureBookings; // Define the future here
+
+  @override
+  void initState() {
+    super.initState();
+    futureBookings = fetchbookings(); // Initialize it in initState
+  } 
+  
+  Future<List<Map<String, dynamic>>> fetchbookings() async {
+    // Fetch all movie documents
+    QuerySnapshot snapshot = await _firestore.collection('bookings').get();
+print("Fetched ${snapshot.docs.length} bookings.");
+    // Convert documents to a list of maps, including the document ID (movie name)
+    return snapshot.docs.map((doc) {
+      return {
+        'id': doc.id,  // The movie name (Alien, for example)
+        ...doc.data() as Map<String, dynamic> // The rest of the movie details
+      };
+    }).toList();
+  }
+  
+    
+
 int? selectedIndex;
+
+
+Future<void> generateReport(String title,Map<String, dynamic> data) async {
+  final pdf = pw.Document();
+ final imageBytes = await rootBundle.load('assets/images/logo.png'); // Adjust the path as needed
+  final posterImage = pw.MemoryImage(imageBytes.buffer.asUint8List());
+  pdf.addPage(
+    pw.Page(
+      build: (pw.Context context) {
+        return pw.Padding(
+          padding: pw.EdgeInsets.all(20),
+          child: pw.Column(
+            crossAxisAlignment: pw.CrossAxisAlignment.start,
+            children: [
+                           pw.Image(posterImage, height: 150, width: 100),
+              pw.SizedBox(height: 20),
+              pw.Text(
+                title,
+                style: pw.TextStyle(fontSize: 24, fontWeight: pw.FontWeight.bold),
+              ),
+              pw.Divider(height: 20, thickness: 2),
+
+                pw.SizedBox(height: 10),
+                pw.Text('Ticket Summary', style: pw.TextStyle(fontSize: 20, fontWeight: pw.FontWeight.bold)),
+                pw.SizedBox(height: 10),
+                pw.Text('Ticket Number: ${data['ticketno']}'),
+                pw.Text('Date: ${data['selectedShowtimeDay']} ${data['selectedShowtimeNo']}, ${data['selectedShowtimeMonth']}'),
+                pw.Text('Time: ${data['selectedShowtime']}'),
+                 pw.SizedBox(height: 20),
+                pw.Text('${data['selectedCinema']}', style: pw.TextStyle(fontSize: 20, fontWeight: pw.FontWeight.bold)),
+                pw.SizedBox(height: 20),
+                pw.Text('Hall: ${data['selectedHall']}', style: pw.TextStyle(fontSize: 20, fontWeight: pw.FontWeight.bold)),
+                pw.SizedBox(height: 20),
+              pw.Text('Notes', style: pw.TextStyle(fontSize: 20, fontWeight: pw.FontWeight.bold)),
+              pw.Text('This report provides an overview of the selected movie ticket details, including showtime, hall information, and other relevant booking specifics.'),
+
+            ],
+          ),
+        );
+      },
+    ),
+  );
+
+  await Printing.sharePdf(bytes: await pdf.save(), filename: 'leave_analytics_report.pdf');
+}
   @override
   Widget build(BuildContext context) { 
  
@@ -107,7 +112,45 @@ int? selectedIndex;
   Widget MobileNavBar() {
     return   Scaffold(
       
-      body: Stack(
+      body: FutureBuilder<List<Map<String, dynamic>>>(
+            future: futureBookings,
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Center(child: CircularProgressIndicator());
+              } else if (snapshot.hasError) {
+                 print("Error: ${snapshot.error}");
+                return Center(child: Text('Error fetching movies'));
+              } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                return Center(child: Text('No tickets found'));
+              }
+
+          List<String> titles = snapshot.data!
+              .map((bookings) => bookings['movieTitle'] as String)
+              .toList();
+          List<Widget> images = snapshot.data!.map((bookings) {
+            return Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(15)),
+                image: DecorationImage(
+                  image: NetworkImage(bookings['poster_url']), // Replace with dynamic image if available
+                  fit: BoxFit.cover,
+                  colorFilter: ColorFilter.mode(
+                    Colors.black.withOpacity(0.4),
+                    BlendMode.darken,
+                  ),
+                ),
+              ),
+              child: Align(
+                alignment: Alignment.topCenter,
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 50.0),
+                  child: Text(bookings['selectedCinema'] ?? 'Cinema Hall'),
+                ),
+              ),
+            );
+          }).toList();
+
+      return Stack(
         children: [
           VerticalCardPager(
             titles: titles,
@@ -141,15 +184,19 @@ int? selectedIndex;
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Silverbird Cinema, Ikeja', style: TextStyle(fontSize: 20,color: Colors.black,fontWeight: FontWeight.bold)),
+                   Text(titles[selectedIndex!], style: TextStyle(fontSize: 20,color: Colors.black,fontWeight: FontWeight.bold)),
+                      SizedBox(height: 10),
+                    Text('Ticket Number: ${snapshot.data![selectedIndex!]['ticketno']}',style: TextStyle(color:Colors.black),),
                     SizedBox(height: 10),
-                    Text('February 15th',style: TextStyle(color:Colors.black),),
+                    Text('Date: ${snapshot.data![selectedIndex!]['selectedShowtimeDay']} ${snapshot.data![selectedIndex!]['selectedShowtimeNo']}, ${snapshot.data![selectedIndex!]['selectedShowtimeMonth']}',style: TextStyle(color:Colors.black),),
+
                     SizedBox(height: 5),
-                    Text('Time: 9:40pm',style: TextStyle(color:Colors.black)),
+                    Text('Time: ${snapshot.data![selectedIndex!]['selectedShowtime']}',style: TextStyle(color:Colors.black)),
+                     SizedBox(height: 5),
+                    Text('${snapshot.data![selectedIndex!]['selectedCinema']}',style: TextStyle(color:Colors.black)),
                     SizedBox(height: 5),
-                    Text('Row: 5',style: TextStyle(color:Colors.black)),
-                    SizedBox(height: 5),
-                    Text('Seat: 25',style: TextStyle(color:Colors.black)),
+                    Text('Hall: ${snapshot.data![selectedIndex!]['selectedHall']}',style: TextStyle(color:Colors.black)),
+                    
                     SizedBox(height: 20),
                     Row(children: [
                       ElevatedButton(
@@ -161,14 +208,17 @@ int? selectedIndex;
                       child: Text('Close Details'),
                     ),
                     SizedBox(width: 50,),
-                  TextButton(onPressed: () {
+                  TextButton(onPressed: () async{
+    await generateReport(titles[selectedIndex!], snapshot.data![selectedIndex!]);
   }, child: Icon(Icons.present_to_all_outlined,))
                     ],)
                   ],
                 ),
               ),
-            ),])
-    );
+            ),]);
+  }
+    ));
+  }
   }
 
   Widget DeskTopNavBar() {
@@ -260,7 +310,7 @@ ElevatedButton(onPressed: () {
            
           
           
-          // Add more fields as needed
+          
         );
       },
     ),
@@ -268,6 +318,8 @@ ElevatedButton(onPressed: () {
     )
     );
   }
-}
+
+
+
 
 

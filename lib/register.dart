@@ -58,6 +58,7 @@ class _registerState extends State<register> {
   }
 
   Widget MobileNavBar() {
+    bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
     return Scaffold(
     body: 
     Container(
@@ -70,11 +71,11 @@ class _registerState extends State<register> {
             Container(
               height: 200,
               width: 250,
-              decoration: BoxDecoration(
-              //  color: Colors.black,
-                borderRadius: BorderRadius.all(Radius.circular(15)),
-                  border: Border.all(color: Colors.black, width: 2),
-              ),
+              // decoration: BoxDecoration(
+              // //  color: Colors.black,
+              //   borderRadius: BorderRadius.all(Radius.circular(15)),
+              //     border: Border.all(color: Colors.black, width: 2),
+              // ),
               child: Column(
                       children: [
                         SizedBox(height: 10),
@@ -85,17 +86,18 @@ class _registerState extends State<register> {
                         Container(
                           height: 30,
                           width: 200,
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.black, width: 2),
-                            borderRadius: BorderRadius.all(Radius.circular(5)),
-                          ),
+                          // decoration: BoxDecoration(
+                          //   border: Border.all(color: Colors.black, width: 2),
+                          //   borderRadius: BorderRadius.all(Radius.circular(5)),
+                          // ),
                           child: TextField(
                             controller: _email,
                             keyboardType: TextInputType.emailAddress,
                             autocorrect: false,
                             enableSuggestions: true,
-                                style: TextStyle(color:  Color.fromARGB(178, 5, 74, 131)),
+                                style: TextStyle(  color: isDarkMode ? Colors.white : Colors.black,),
                             decoration: InputDecoration(
+                                enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: isDarkMode ? Colors.white : Colors.black,)),
                               contentPadding: EdgeInsets.symmetric(vertical: 15),
                             ),
                           ),
@@ -108,17 +110,18 @@ class _registerState extends State<register> {
                         Container(
                           height: 30,
                           width: 200,
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.black, width: 2),
-                            borderRadius: BorderRadius.all(Radius.circular(5)),
-                          ),
+                          // decoration: BoxDecoration(
+                          //   border: Border.all(color: Colors.black, width: 2),
+                          //   borderRadius: BorderRadius.all(Radius.circular(5)),
+                          // ),
                           child: TextField(
                             controller: _password,
                             autocorrect: false,
                             enableSuggestions: true,
                             obscureText: true,
-                                 style: TextStyle(color:  Color.fromARGB(178, 5, 74, 131)),
+                                 style: TextStyle(  color: isDarkMode ? Colors.white : Colors.black,),
                             decoration: InputDecoration(
+                                enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: isDarkMode ? Colors.white : Colors.black,)),
                               contentPadding: EdgeInsets.symmetric(vertical: 15),
                             ),
                           ),
